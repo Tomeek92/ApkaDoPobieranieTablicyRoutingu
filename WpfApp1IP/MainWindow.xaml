@@ -1,0 +1,16 @@
+﻿<Window x:Class="WpfApp1IP.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1IP"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="650" Width="1000">
+    <Grid>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="54,463,0,0" VerticalAlignment="Top" Height="95" Width="316" Click="Button_Click"/>
+        <DockPanel HorizontalAlignment="Left" Height="324" LastChildFill="False" Margin="54,82,0,0" VerticalAlignment="Top" Width="747"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="500,463,0,0" VerticalAlignment="Top" Height="68" Width="319" Click="Button_Click_1"/>
+
+
+    </Grid>
+</Window>
