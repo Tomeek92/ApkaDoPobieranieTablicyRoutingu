@@ -7,10 +7,33 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="1000">
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="54,463,0,0" VerticalAlignment="Top" Height="95" Width="316" Click="Button_Click"/>
-        <DockPanel HorizontalAlignment="Left" Height="324" LastChildFill="False" Margin="54,82,0,0" VerticalAlignment="Top" Width="747"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="500,463,0,0" VerticalAlignment="Top" Height="68" Width="319" Click="Button_Click_1"/>
+        <Button Content="Tabela Routingu Cisco" HorizontalAlignment="Left" Margin="54,317,0,0" VerticalAlignment="Top" Height="173" Width="404" Click="Button_Click" FontSize="35" Background="AliceBlue" BorderBrush="Black" BorderThickness="3" />
+        <Button Content="Zapisz na pulpit" HorizontalAlignment="Left" Margin="536,352,0,0" VerticalAlignment="Top" Height="103" Width="375" Click="Button_Click_1" FontSize ="35" Background="AliceBlue" BorderBrush="Black" BorderThickness="3"/>
+        <Button Content="Zapisz na pulpit" HorizontalAlignment="Left" Margin="536,64,0,0" VerticalAlignment="Top" Height="103" Width="375" Click="Button_Click_2" FontSize="35" Background="AliceBlue" BorderBrush="Black" BorderThickness="3"/>
+        <Button Content="Tabela Routingu" HorizontalAlignment="Left" Margin="54,29,0,0" VerticalAlignment="Top" Height="173" Width="404" Click="Button_Click_3" FontSize="35" Background="AliceBlue" BorderBrush="Black" BorderThickness="3"/>
+        <Label Content="Twoje Ip" HorizontalAlignment="Left" Height="63" Margin="256,234,0,0" VerticalAlignment="Top" Width="515"  FontSize="35" Background="AliceBlue" BorderBrush="Black" BorderThickness="3" Name="ipLabel"/>
 
 
     </Grid>
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property= "RenderTransform">
+                        <Setter.Value>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="0.99" ScaleY="0.99"/>
+                                <TranslateTransform X="2" Y="2"/>
+                            </TransformGroup>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="BorderThickness">
+                        <Setter.Value>
+                            <Thickness Left="2" Right="2" Top="2" Bottom="2"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
 </Window>
