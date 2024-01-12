@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net.NetworkInformation;
+
 
 namespace WpfApp1IP
 {
@@ -61,9 +63,11 @@ namespace WpfApp1IP
             Process p = Process.Start(psi);
             string output = p.StandardOutput.ReadToEnd();
             string error = p.StandardError.ReadToEnd();
-            string path = @"C:\Users\tfryckowski\Desktop\testMyTest.txt";
-           
-            
+            string fileName = "testMyTest.txt";
+            string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), fileName);
+
+
+
             p.WaitForExit();
 
             if (!string.IsNullOrEmpty(error))
@@ -77,34 +81,7 @@ namespace WpfApp1IP
             }
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            
-                ProcessStartInfo psi = new ProcessStartInfo("cmd", "/c route print")
-                {
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
-
-                Process p = Process.Start(psi);
-                string output = p.StandardOutput.ReadToEnd();
-                string error = p.StandardError.ReadToEnd();
-                string path = @"C:\Users\tfryckowski\Desktop\testMyTest.txt";
-            p.WaitForExit();
-
-                if (!string.IsNullOrEmpty(error))
-                {
-                    MessageBox.Show("Wystąpił błąd: " + error);
-                }
-                else
-                {
-                    // Zapisz wyniki do pliku
-                    File.WriteAllText(path, output);
-                }
-            
-        }
+       
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
@@ -138,7 +115,36 @@ namespace WpfApp1IP
                 }
             }
         }
-    }
 
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            
+            textBox1.Text = "";
+            foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+                {
+                    foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
+                    {
+                        if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                        {
+                            textBox1.Text += ni.Name + ": " + ip.Address.ToString() + Environment.NewLine;
+                        }
+                    }
+                }
+            }
+
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }
+
+
+    }
 }
+
+
     
