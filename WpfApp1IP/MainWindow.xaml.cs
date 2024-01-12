@@ -63,7 +63,7 @@ namespace WpfApp1IP
             Process p = Process.Start(psi);
             string output = p.StandardOutput.ReadToEnd();
             string error = p.StandardError.ReadToEnd();
-            string fileName = "testMyTest.txt";
+            string fileName = "TablicaRoutingu.txt";
             string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), fileName);
 
 
@@ -76,16 +76,88 @@ namespace WpfApp1IP
             }
             else
             {
+
+                Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+                dlg.FileName = "TablicaRoutingu"; // Default file name
+                dlg.DefaultExt = ".txt"; // Default file extension
+                dlg.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+
                 
-                File.WriteAllText(path, output);
+                Nullable<bool> result = dlg.ShowDialog();
+
+                
+                if (result == true)
+                {
+                   
+                    string filename = dlg.FileName;
+                    File.WriteAllText(filename, output);
+                }
             }
         }
 
-       
+
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            ProcessStartInfo psi = new ProcessStartInfo("cmd", "/c route print")
+            textBox1.Text = string.Empty;
+            foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                IPInterfaceProperties ipProps = ni.GetIPProperties();
+                foreach (UnicastIPAddressInformation ip in ipProps.UnicastAddresses)
+                {
+                    textBox1.Text += $"Nazwa: {ni.Name} \n IP: {ip.Address} \n Mask: {ip.IPv4Mask} \n\n";
+                }
+
+            }
+        }
+
+        public void DisplayIPAddress()
+        {
+            string hostName = Dns.GetHostName();
+            IPAddress[] ipAddresses = Dns.GetHostAddresses(hostName);
+            foreach (IPAddress ipAddress in ipAddresses)
+            {
+                if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    textBox2.Text = "Twój adress ip:"+" "+ipAddress.ToString();
+                   
+                    break;
+                }
+            }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+
+            textBox1.Text = string.Empty;
+            foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+                {
+                    foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
+                    {
+                        if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                        {
+                            textBox1.Text += $"Nazwa: {ni.Name} \n IP: {ip.Address} \n\n";
+
+
+                        }
+                    }
+                }
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            
+            textBox1.Text = string.Empty;
+            ProcessStartInfo psi = new ProcessStartInfo("cmd", "/c netsh wlan show networks mode=bssid")
             {
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
@@ -96,53 +168,8 @@ namespace WpfApp1IP
             string output = p.StandardOutput.ReadToEnd();
             p.WaitForExit();
 
-            MessageBox.Show(output);
+            textBox1.Text = output;
         }
-
-
-
-        public void DisplayIPAddress()
-        {
-            string hostName = Dns.GetHostName();
-            IPAddress[] ipAddresses = Dns.GetHostAddresses(hostName);
-            foreach (IPAddress ipAddress in ipAddresses)
-            {
-                if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    ipLabel.Content = "Twój adress ip:"+" "+ipAddress.ToString();
-                   
-                    break;
-                }
-            }
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            
-            textBox1.Text = "";
-            foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
-                {
-                    foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
-                    {
-                        if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                        {
-                            textBox1.Text += ni.Name + ": " + ip.Address.ToString() + Environment.NewLine;
-                        }
-                    }
-                }
-            }
-
-
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            
-        }
-
-
     }
 }
 

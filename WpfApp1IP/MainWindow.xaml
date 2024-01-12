@@ -5,15 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1IP"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="1000">
+        Title="MainWindow" Height="650" Width="1000"
+        Background="LightGray">
+    
     <Grid>
-        <Button Content="Zapisz na pulpit" HorizontalAlignment="Left" Margin="63,466,0,0" VerticalAlignment="Top" Height="103" Width="375" Click="Button_Click_1" FontSize ="35" Background="AliceBlue" BorderBrush="Black" BorderThickness="3"/>
-        <Button Content="Dostępne sieci WiFi" HorizontalAlignment="Left" Margin="63,251,0,0" VerticalAlignment="Top" Height="103" Width="375" Click="Button_Click_2" FontSize="35" Background="AliceBlue" BorderBrush="Black" BorderThickness="3"/>
-        <Button Content="Tabela Routingu" HorizontalAlignment="Left" Margin="34,55,0,0" VerticalAlignment="Top" Height="86" Width="404" Click="Button_Click_3" FontSize="35" Background="AliceBlue" BorderBrush="Black" BorderThickness="3"/>
-        <Label Content="Twoje Ip" HorizontalAlignment="Left" Height="63" Margin="584,532,0,0" VerticalAlignment="Top" Width="364"  FontSize="35" Background="AliceBlue" BorderBrush="Black" BorderThickness="3" Name="ipLabel"/>
-        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="423" Margin="534,55,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="414"/>
-
-
+        <Button Content="Zapisz na pulpit" HorizontalAlignment="Left" Margin="34,466,0,0" VerticalAlignment="Top" Height="103" Width="404" Click="Button_Click_1" FontSize ="35" Background="LightBlue" BorderBrush="Black" BorderThickness="3" FontFamily="Roboto"/>
+        <Button Content=" Dostępne Interface" HorizontalAlignment="Left" Margin="34,177,0,0" VerticalAlignment="Top" Height="89" Width="404" Click="Button_Click_2" FontSize="35" Background="LightBlue" BorderBrush="Black" BorderThickness="3" FontFamily="Roboto"/>
+        <Button Content="Tabela Routingu" HorizontalAlignment="Left" Margin="34,55,0,0" VerticalAlignment="Top" Height="86" Width="404" Click="Button_Click_3" FontSize="35" Background="LightBlue" BorderBrush="Black" BorderThickness="3" FontFamily="Roboto"/>
+        <TextBox x:Name="textBox1"   FontFamily="Courier New" IsReadOnly="True" HorizontalAlignment="Left" Height="423" Margin="500,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="414" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <TextBox.Template>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border Background="White" BorderBrush="Black" BorderThickness="1" CornerRadius="5">
+                        <Grid>
+                            <Rectangle StrokeThickness="0">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Color="White" Offset="0.0"/>
+                                        <GradientStop Color="White" Offset="0.4"/>
+                                        <GradientStop Color="White" Offset="0.45"/>
+                                        <GradientStop Color="White" Offset="0.55"/>
+                                        <GradientStop Color="White" Offset="0.6"/>
+                                        <GradientStop Color="White" Offset="1.0"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,5,0"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </TextBox.Template>
+        </TextBox>
+        <TextBox x:Name="textBox2" FontFamily="Courier New" FontSize="25" IsReadOnly="True" Height="65" Margin="506,504,86,0" TextWrapping="Wrap" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <TextBox.Template>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border Background="White" BorderBrush="Black" BorderThickness="1" CornerRadius="5">
+                        <Grid>
+                            <Rectangle StrokeThickness="0">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                        <GradientStop Color="White" Offset="0.0"/>
+                                        <GradientStop Color="White" Offset="0.4"/>
+                                        <GradientStop Color="White" Offset="0.45"/>
+                                        <GradientStop Color="White" Offset="0.55"/>
+                                        <GradientStop Color="White" Offset="0.6"/>
+                                        <GradientStop Color="White" Offset="1.0"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,5,0"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </TextBox.Template>
+        </TextBox>
+        <Button Content="Dostępne sieci WiFi" HorizontalAlignment="Left" Height="86" Margin="34,317,0,0" VerticalAlignment="Top" Width="404" Click="Button_Click_4" FontSize="35" Background="LightBlue" BorderBrush="Black" BorderThickness="3" />
     </Grid>
     <Window.Resources>
         <Style TargetType="Button">
