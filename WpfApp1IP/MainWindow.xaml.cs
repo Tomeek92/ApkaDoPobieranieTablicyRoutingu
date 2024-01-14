@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net.NetworkInformation;
 using Microsoft.Win32;
+using System.ComponentModel;
+using tik4net;
 
 
 namespace WpfApp1IP
@@ -174,46 +176,56 @@ namespace WpfApp1IP
 
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
-
             string[] routers = textBox1.Text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
             foreach (string routerIP in routers)
             {
-                try
+                Task.Run(() =>
                 {
-                    ProcessStartInfo startInfo = new ProcessStartInfo()
+                    try
                     {
-                        FileName = "plink.exe",
-                        Arguments = $"-ssh admin@{routerIP} -pw admin \"show ip route\"",
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true
-                    };
+                        using (ITikConnection connection = ConnectionFactory.CreateConnection(TikConnectionType.Api))
+                        {
+                            connection.Open("192.168.12.1", "admin", "admin");
 
-                    Process process = new Process() { StartInfo = startInfo };
-                    process.Start();
+                            var command = connection.CreateCommandAndParameters("/ip/route/print");
+                            var result = command.ExecuteList();
 
-                    string result = process.StandardOutput.ReadToEnd();
-
-                    process.WaitForExit();
-
-                    // Here you can handle the result
-                    ComboBox1.Items.Add($"Routing table for {routerIP}:\n{result}");
-                }
-                catch (Exception ex)
-                {
-                    // Handle the exception
-                    MessageBox.Show($"Wystąpił błąd podczas pobierania tablicy routingu z {routerIP}: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                            // Use Dispatcher to update UI from a non-UI thread
+                            Dispatcher.Invoke(() =>
+                            {
+                                ComboBox1.Items.Add($"Routing table for {routerIP}:\n{result}");
+                            });
+                        }
+                    }
+                    catch (TikCommandException ex)
+                    {
+                        // Handle the exception for connection issues
+                        Dispatcher.Invoke(() =>
+                        {
+                            MessageBox.Show($"Nie można nawiązać połączenia z {routerIP}: " + ex.Message, "Błąd połączenia", MessageBoxButton.OK, MessageBoxImage.Error);
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle other exceptions
+                        Dispatcher.Invoke(() =>
+                        {
+                            MessageBox.Show($"Wystąpił błąd podczas pobierania tablicy routingu z {routerIP}: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                        });
+                    }
+                });
             }
+
         }
-        
+
+
+
+
+
 
         private void Button_Click_6(object sender, RoutedEventArgs e)
         {
-
-            
-
             if (ComboBox1.SelectedItem == null)
             {
                 MessageBox.Show("Użytkownik nie wybrał urządzenia.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -221,32 +233,37 @@ namespace WpfApp1IP
             }
             string routerIP = ComboBox1.SelectedItem.ToString();
 
-            try
+            Task.Run(() =>
             {
-                ProcessStartInfo startInfo = new ProcessStartInfo()
+
+
+                try
                 {
-                    FileName = "plink.exe",
-                    Arguments = $"-ssh admin@192.168.12.1 -pw admin \"show ip route\"",
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
+                    using (ITikConnection connection = ConnectionFactory.CreateConnection(TikConnectionType.Api))
+                    {
+                        connection.Open("192.168.12.1", "admin", "admin");
 
-                Process process = new Process() { StartInfo = startInfo };
-                process.Start();
+                        var command = connection.CreateCommandAndParameters("/ip/route/print");
+                        var result = command.ExecuteList();
 
-                string result = process.StandardOutput.ReadToEnd();
-
-                process.WaitForExit();
-
-                // Here you can handle the result
-                textBox1.Text = ($"Routing table for {routerIP}:\n{result}");
-            }
-            catch (Exception ex)
-            {
-                // Handle the exception
-                MessageBox.Show($"Wystąpił błąd podczas pobierania tablicy routingu z {routerIP}: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+                        // Use Dispatcher to update UI from a non-UI thread
+                        Dispatcher.Invoke(() =>
+                        {
+                            textBox1.Text = ($"Routing table for {routerIP}:\n{result}");
+                        });
+                    }
+                }
+                catch (TikCommandException ex)
+                {
+                    // Handle the exception for connection issues
+                    MessageBox.Show($"Nie można nawiązać połączenia z {routerIP}: " + ex.Message, "Błąd połączenia", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (Exception ex)
+                {
+                    // Handle other exceptions
+                    MessageBox.Show($"Wystąpił błąd podczas pobierania tablicy routingu z {routerIP}: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
 
         }
 
@@ -257,8 +274,6 @@ namespace WpfApp1IP
 
         private void Button_Click_7(object sender, RoutedEventArgs e)
         {
-           
-
             if (ComboBox1.SelectedItem == null)
             {
                 MessageBox.Show("Użytkownik nie wybrał urządzenia.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -266,38 +281,41 @@ namespace WpfApp1IP
             }
             string routerIP = ComboBox1.SelectedItem.ToString();
 
-            try
+            Task.Run(() =>
             {
-                ProcessStartInfo startInfo = new ProcessStartInfo()
+
+
+                try
                 {
-                    FileName = "plink.exe", // Putty command line ssh client
-                    Arguments = $"-ssh admin@192.168.12.1 -pw admin \"show ip route\"",
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
+                    using (ITikConnection connection = ConnectionFactory.CreateConnection(TikConnectionType.Api))
+                    {
+                        connection.Open("192.168.12.1", "admin", "admin");
 
-                Process process = new Process() { StartInfo = startInfo };
-                process.Start();
+                        var command = connection.CreateCommandAndParameters("/ip/route/print");
+                        var result = command.ExecuteList();
 
-                string result = process.StandardOutput.ReadToEnd();
-
-                process.WaitForExit();
-
-                // Open save file dialog
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter = "Text file (*.txt)|*.txt";
-                if (saveFileDialog.ShowDialog() == true)
-                {
-                    // Save the result to the selected file
-                    File.WriteAllText(saveFileDialog.FileName, $"Routing table for {routerIP}:\n{result}");
+                        // Open save file dialog
+                        SaveFileDialog saveFileDialog = new SaveFileDialog();
+                        saveFileDialog.Filter = "Text file (*.txt)|*.txt";
+                        if (saveFileDialog.ShowDialog() == true)
+                        {
+                            // Save the result to the selected file
+                            File.WriteAllText(saveFileDialog.FileName, $"Routing table for {routerIP}:\n{result}");
+                        }
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                // Handle the exception
-                MessageBox.Show($"Wystąpił błąd podczas pobierania tablicy routingu z {routerIP}: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+                catch (TikCommandException ex)
+                {
+                    // Handle the exception for connection issues
+                    MessageBox.Show($"Nie można nawiązać połączenia z {routerIP}: " + ex.Message, "Błąd połączenia", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (Exception ex)
+                {
+                    // Handle other exceptions
+                    MessageBox.Show($"Wystąpił błąd podczas pobierania tablicy routingu z {routerIP}: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+
         }
 
         private void Button_Click_8(object sender, RoutedEventArgs e)
@@ -306,43 +324,50 @@ namespace WpfApp1IP
 
             foreach (string routerIP in routers)
             {
-                try
+                Task.Run(() =>
                 {
-                    ProcessStartInfo startInfo = new ProcessStartInfo()
+                    try
                     {
-                        FileName = "plink.exe", // Putty command line ssh client
-                        Arguments = $"-ssh admin@192.168.12.1 -pw admin \"show ip route\"",
-                        RedirectStandardOutput = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true
-                    };
+                        using (ITikConnection connection = ConnectionFactory.CreateConnection(TikConnectionType.Api))
+                        {
+                            connection.Open("192.168.12.1", "admin", "admin");
 
-                    Process process = new Process() { StartInfo = startInfo };
-                    process.Start();
+                            var command = connection.CreateCommandAndParameters("/ip/route/print");
+                            var result = command.ExecuteList();
 
-                    string result = process.StandardOutput.ReadToEnd();
-
-                    process.WaitForExit();
-
-                    // Open save file dialog
-                    SaveFileDialog saveFileDialog = new SaveFileDialog();
-                    saveFileDialog.Filter = "Text file (*.txt)|*.txt";
-                    if (saveFileDialog.ShowDialog() == true)
-                    {
-                        // Save the result to the selected file
-                        File.WriteAllText(saveFileDialog.FileName, $"Routing table for {routerIP}:\n{result}");
+                            // Use Dispatcher to update UI from a non-UI thread
+                            Dispatcher.Invoke(() =>
+                            {
+                                // Open save file dialog
+                                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                                saveFileDialog.Filter = "Text file (*.txt)|*.txt";
+                                if (saveFileDialog.ShowDialog() == true)
+                                {
+                                    // Save the result to the selected file
+                                    File.WriteAllText(saveFileDialog.FileName, $"Routing table for {routerIP}:\n{result}");
+                                }
+                            });
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    // Handle the exception
-                    MessageBox.Show($"Wystąpił błąd podczas pobierania tablicy routingu z {routerIP}: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                    catch (TikCommandException ex)
+                    {
+                        // Handle the exception for connection issues
+                        Dispatcher.Invoke(() =>
+                        {
+                            MessageBox.Show($"Nie można nawiązać połączenia z {routerIP}: " + ex.Message, "Błąd połączenia", MessageBoxButton.OK, MessageBoxImage.Error);
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle other exceptions
+                        Dispatcher.Invoke(() =>
+                        {
+                            MessageBox.Show($"Wystąpił błąd podczas pobierania tablicy routingu z {routerIP}: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                        });
+                    }
+                });
             }
-        }
 
-        private void Button_Click_9(object sender, RoutedEventArgs e)
-        {
 
         }
     }

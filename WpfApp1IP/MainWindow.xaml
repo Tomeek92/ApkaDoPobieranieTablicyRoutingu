@@ -36,9 +36,9 @@
             </TextBox.Template>
         </TextBox>
         <Button Content="Dostępne sieci WiFi lokalnie" HorizontalAlignment="Left" Height="76" Margin="34,260,0,0" VerticalAlignment="Top" Width="404" Click="Button_Click_4" FontSize="15" Background="LightBlue" BorderBrush="Black" BorderThickness="3" />
-        <Button HorizontalAlignment="Left" Margin="34,456,0,0" VerticalAlignment="Top" Height="51" Width="300" Click="Button_Click_5">
-            <Button Content="Wyświetl ze wszystkich urządzeń tablice routingu" Click="Button_Click_9"/>
-        </Button>
+        <Button HorizontalAlignment="Left" Margin="32,452,0,0" VerticalAlignment="Top" Height="51" Width="300" Click="Button_Click_5" Content="Wyświetl ze wszystkich urządzeń tablice routingu"/>
+
+
         <Button Content="Wyświetl wybrany" HorizontalAlignment="Left" Margin="29,519,0,0" VerticalAlignment="Top" Height="50" Width="305" Click="Button_Click_6"/>
         <ComboBox HorizontalAlignment="Left" Margin="500,280,0,0" VerticalAlignment="Top" Width="463" Height="202" SelectionChanged="ComboBox_SelectionChanged">
             <ComboBox Width="120" x:Name="ComboBox1" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
