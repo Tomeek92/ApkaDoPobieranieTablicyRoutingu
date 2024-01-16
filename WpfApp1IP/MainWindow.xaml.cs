@@ -191,10 +191,27 @@ namespace WpfApp1IP
                             var command = connection.CreateCommandAndParameters("/ip/route/print");
                             var result = command.ExecuteList();
 
-                            // Use Dispatcher to update UI from a non-UI thread
+                            var output = new StringBuilder();
+
+                            foreach (var sentence in result)
+                            {
+                                foreach (var word in sentence.Words)
+                                {
+                                    string line = $"{word.Key}: {word.Value}";
+                                    output.AppendLine(line);
+
+                                    
+                                    Dispatcher.Invoke(() =>
+                                    {
+                                        ComboBox1.Items.Add(line);
+                                    });
+                                }
+                            }
+
+                            
                             Dispatcher.Invoke(() =>
                             {
-                                ComboBox1.Items.Add($"Routing table for {routerIP}:\n{result}");
+                                textBox1.Text = $"Routing table for 192.168.12.1:\n{output}";
                             });
                         }
                     }
@@ -203,7 +220,7 @@ namespace WpfApp1IP
                         // Handle the exception for connection issues
                         Dispatcher.Invoke(() =>
                         {
-                            MessageBox.Show($"Nie można nawiązać połączenia z {routerIP}: " + ex.Message, "Błąd połączenia", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show($"Nie można nawiązać połączenia z 192.168.12.1: " + ex.Message, "Błąd połączenia", MessageBoxButton.OK, MessageBoxImage.Error);
                         });
                     }
                     catch (Exception ex)
@@ -211,11 +228,12 @@ namespace WpfApp1IP
                         // Handle other exceptions
                         Dispatcher.Invoke(() =>
                         {
-                            MessageBox.Show($"Wystąpił błąd podczas pobierania tablicy routingu z {routerIP}: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show($"Wystąpił błąd podczas pobierania tablicy routingu z 192.168.12.1: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                         });
                     }
                 });
             }
+
 
         }
 
@@ -249,7 +267,7 @@ namespace WpfApp1IP
                         // Use Dispatcher to update UI from a non-UI thread
                         Dispatcher.Invoke(() =>
                         {
-                            textBox1.Text = ($"Routing table for {routerIP}:\n{result}");
+                            textBox1.Text = ($"Routing table for 192.168.12.1:\n{result}");
                         });
                     }
                 }
@@ -300,7 +318,7 @@ namespace WpfApp1IP
                         if (saveFileDialog.ShowDialog() == true)
                         {
                             // Save the result to the selected file
-                            File.WriteAllText(saveFileDialog.FileName, $"Routing table for {routerIP}:\n{result}");
+                            File.WriteAllText(saveFileDialog.FileName, $"Routing table for 192.168.12.1:\n{result}");
                         }
                     }
                 }
@@ -344,7 +362,7 @@ namespace WpfApp1IP
                                 if (saveFileDialog.ShowDialog() == true)
                                 {
                                     // Save the result to the selected file
-                                    File.WriteAllText(saveFileDialog.FileName, $"Routing table for {routerIP}:\n{result}");
+                                    File.WriteAllText(saveFileDialog.FileName, $"Routing table for 192.168.12.1:\n{result}");
                                 }
                             });
                         }
