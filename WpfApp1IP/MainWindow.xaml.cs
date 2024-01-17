@@ -199,16 +199,9 @@ namespace WpfApp1IP
                                 {
                                     string line = $"{word.Key}: {word.Value}";
                                     output.AppendLine(line);
-
-                                    
-                                    Dispatcher.Invoke(() =>
-                                    {
-                                        ComboBox1.Items.Add(line);
-                                    });
                                 }
                             }
 
-                            
                             Dispatcher.Invoke(() =>
                             {
                                 textBox1.Text = $"Routing table for 192.168.12.1:\n{output}";
@@ -234,111 +227,16 @@ namespace WpfApp1IP
                 });
             }
 
-
         }
 
 
 
-
-
-
-        private void Button_Click_6(object sender, RoutedEventArgs e)
-        {
-            if (ComboBox1.SelectedItem == null)
-            {
-                MessageBox.Show("Użytkownik nie wybrał urządzenia.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            string routerIP = ComboBox1.SelectedItem.ToString();
-
-            Task.Run(() =>
-            {
-
-
-                try
-                {
-                    using (ITikConnection connection = ConnectionFactory.CreateConnection(TikConnectionType.Api))
-                    {
-                        connection.Open("192.168.12.1", "admin", "admin");
-
-                        var command = connection.CreateCommandAndParameters("/ip/route/print");
-                        var result = command.ExecuteList();
-
-                        // Use Dispatcher to update UI from a non-UI thread
-                        Dispatcher.Invoke(() =>
-                        {
-                            textBox1.Text = ($"Routing table for 192.168.12.1:\n{result}");
-                        });
-                    }
-                }
-                catch (TikCommandException ex)
-                {
-                    // Handle the exception for connection issues
-                    MessageBox.Show($"Nie można nawiązać połączenia z {routerIP}: " + ex.Message, "Błąd połączenia", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                catch (Exception ex)
-                {
-                    // Handle other exceptions
-                    MessageBox.Show($"Wystąpił błąd podczas pobierania tablicy routingu z {routerIP}: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            });
-
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_7(object sender, RoutedEventArgs e)
-        {
-            if (ComboBox1.SelectedItem == null)
-            {
-                MessageBox.Show("Użytkownik nie wybrał urządzenia.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            string routerIP = ComboBox1.SelectedItem.ToString();
-
-            Task.Run(() =>
-            {
-
-
-                try
-                {
-                    using (ITikConnection connection = ConnectionFactory.CreateConnection(TikConnectionType.Api))
-                    {
-                        connection.Open("192.168.12.1", "admin", "admin");
-
-                        var command = connection.CreateCommandAndParameters("/ip/route/print");
-                        var result = command.ExecuteList();
-
-                        // Open save file dialog
-                        SaveFileDialog saveFileDialog = new SaveFileDialog();
-                        saveFileDialog.Filter = "Text file (*.txt)|*.txt";
-                        if (saveFileDialog.ShowDialog() == true)
-                        {
-                            // Save the result to the selected file
-                            File.WriteAllText(saveFileDialog.FileName, $"Routing table for 192.168.12.1:\n{result}");
-                        }
-                    }
-                }
-                catch (TikCommandException ex)
-                {
-                    // Handle the exception for connection issues
-                    MessageBox.Show($"Nie można nawiązać połączenia z {routerIP}: " + ex.Message, "Błąd połączenia", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                catch (Exception ex)
-                {
-                    // Handle other exceptions
-                    MessageBox.Show($"Wystąpił błąd podczas pobierania tablicy routingu z {routerIP}: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            });
-
-        }
 
         private void Button_Click_8(object sender, RoutedEventArgs e)
         {
-            string[] routers = ComboBox1.Text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+
+            string[] routers = textBox1.Text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
             foreach (string routerIP in routers)
             {
@@ -361,8 +259,11 @@ namespace WpfApp1IP
                                 saveFileDialog.Filter = "Text file (*.txt)|*.txt";
                                 if (saveFileDialog.ShowDialog() == true)
                                 {
+                                    // Convert the result to a string
+                                    var resultString = string.Join("\n", result.Select(r => r.ToString()));
+
                                     // Save the result to the selected file
-                                    File.WriteAllText(saveFileDialog.FileName, $"Routing table for 192.168.12.1:\n{result}");
+                                    File.WriteAllText(saveFileDialog.FileName, $"Routing table for 192.168.12.1:\n{resultString}");
                                 }
                             });
                         }
@@ -390,6 +291,8 @@ namespace WpfApp1IP
         }
     }
 }
+    
+
 
     
 

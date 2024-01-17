@@ -12,7 +12,7 @@
         <Button Content="Zapisz na pulpit tablice lokalną" HorizontalAlignment="Left" Margin="34,361,0,0" VerticalAlignment="Top" Height="77" Width="404" Click="Button_Click_1" FontSize ="15" Background="LightBlue" BorderBrush="Black" BorderThickness="3" FontFamily="Roboto"/>
         <Button Content=" Dostępne Interface lokalnie" HorizontalAlignment="Left" Margin="34,154,0,0" VerticalAlignment="Top" Height="79" Width="404" Click="Button_Click_2" FontSize="15" Background="LightBlue" BorderBrush="Black" BorderThickness="3" FontFamily="Roboto"/>
         <Button Content="Tabela Routingu lokalna" HorizontalAlignment="Left" Margin="34,55,0,0" VerticalAlignment="Top" Height="72" Width="404" Click="Button_Click_3" FontSize="15" Background="LightBlue" BorderBrush="Black" BorderThickness="3" FontFamily="Roboto"/>
-        <TextBox x:Name="textBox1" FontFamily="Courier New" IsReadOnly="True" HorizontalAlignment="Left" Height="210" Margin="500,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="463" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <TextBox x:Name="textBox1" FontFamily="Courier New" IsReadOnly="True" HorizontalAlignment="Left" Height="383" Margin="500,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="463" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <TextBox.Template>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Border Background="White" BorderBrush="Black" BorderThickness="1" CornerRadius="5">
@@ -36,15 +36,8 @@
             </TextBox.Template>
         </TextBox>
         <Button Content="Dostępne sieci WiFi lokalnie" HorizontalAlignment="Left" Height="76" Margin="34,260,0,0" VerticalAlignment="Top" Width="404" Click="Button_Click_4" FontSize="15" Background="LightBlue" BorderBrush="Black" BorderThickness="3" />
-        <Button HorizontalAlignment="Left" Margin="32,452,0,0" VerticalAlignment="Top" Height="51" Width="300" Click="Button_Click_5" Content="Wyświetl ze wszystkich urządzeń tablice routingu"/>
-
-
-        <Button Content="Wyświetl wybrany" HorizontalAlignment="Left" Margin="29,519,0,0" VerticalAlignment="Top" Height="50" Width="305" Click="Button_Click_6"/>
-        <ComboBox HorizontalAlignment="Left" Margin="500,344,0,0" VerticalAlignment="Top" Width="463" Height="56" SelectionChanged="ComboBox_SelectionChanged">
-            <ComboBox Width="120" x:Name="ComboBox1"/>
-        </ComboBox>
-        <Button Content="Pobierz tablice z wybranego urządzenia" HorizontalAlignment="Left" Margin="500,504,0,0" VerticalAlignment="Top" Height="101" Width="232" Click="Button_Click_7"/>
-        <Button Content="Pobierz tablice ze wszystkich urządzeń" HorizontalAlignment="Left" Margin="748,504,0,0" VerticalAlignment="Top" Height="101" Width="215" Click="Button_Click_8"/>
+        <Button HorizontalAlignment="Left" Margin="86,494,0,0" VerticalAlignment="Top" Height="94" Width="300" Click="Button_Click_5" Content="Wyświetl ze wszystkich urządzeń tablice routingu"/>
+        <Button Content="Pobierz tablice ze wszystkich urządzeń" HorizontalAlignment="Left" Margin="500,487,0,0" VerticalAlignment="Top" Height="101" Width="463" Click="Button_Click_8"/>
     </Grid>
     <Window.Resources>
         <Style TargetType="Button">
