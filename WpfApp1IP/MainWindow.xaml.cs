@@ -17,6 +17,7 @@ using System.Net.NetworkInformation;
 using Microsoft.Win32;
 using System.ComponentModel;
 using tik4net;
+using Renci.SshNet;
 
 
 namespace WpfApp1IP
@@ -288,6 +289,138 @@ namespace WpfApp1IP
             }
 
 
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            string[] routers = textBox1.Text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+            foreach (string routerIP in routers)
+            {
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        using (var client = new SshClient("100.20.20.0", "admin", "admin"))
+                        {
+                            client.Connect();
+
+                            var command = client.CreateCommand("show ip route");
+                            var result = command.Execute();
+
+                            Dispatcher.Invoke(() =>
+                            {
+                                textBox1.Text = $"Routing table for 100.20.20.0:\n{result}";
+                            });
+
+                            client.Disconnect();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle exceptions
+                        Dispatcher.Invoke(() =>
+                        {
+                            MessageBox.Show($"Wystąpił błąd podczas pobierania tablicy routingu z 100.20.20.0: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                        });
+                    }
+                });
+            }
+        }
+
+        private void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            string[] routers = textBox1.Text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+            foreach (string routerIP in routers)
+            {
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        using (var client = new SshClient("100.20.20.0", "username", "password"))
+                        {
+                            client.Connect();
+
+                            var command = client.CreateCommand("show ip route");
+                            var result = command.Execute();
+
+                            // Użyj SaveFileDialog do wybrania lokalizacji zapisu pliku
+                            SaveFileDialog saveFileDialog = new SaveFileDialog();
+                            saveFileDialog.Filter = "Text Files (*.txt)|*.txt";
+                            saveFileDialog.DefaultExt = "txt";
+                            saveFileDialog.AddExtension = true;
+
+                            bool? dialogResult = saveFileDialog.ShowDialog();
+
+                            if (dialogResult == true)
+                            {
+                                // Zapisz wynik do wybranego pliku
+                                File.WriteAllText(saveFileDialog.FileName, $"Routing table for 100.20.20.0:\n{result}");
+                            }
+
+                            client.Disconnect();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle exceptions
+                        Dispatcher.Invoke(() =>
+                        {
+                            MessageBox.Show($"Wystąpił błąd podczas pobierania tablicy routingu z 100.20.20.0: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                        });
+                    }
+                });
+            }
+        }
+
+        private void Button_Click_9(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Text Files (*.txt)|*.txt";
+            openFileDialog.DefaultExt = "txt";
+
+            bool? dialogResult = openFileDialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                // Sprawdź, czy plik ma rozszerzenie .txt
+                if (System.IO.Path.GetExtension(openFileDialog.FileName).ToLower() == ".txt")
+                {
+                    
+                    string fileContent = File.ReadAllText(openFileDialog.FileName);
+                    textBox1.Text = fileContent;
+                }
+                else
+                {
+                    MessageBox.Show("Wybrany plik nie jest plikiem tekstowym (.txt). Wybierz poprawny plik.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void Button_Click_10(object sender, RoutedEventArgs e)
+        {
+            
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text Files (*.txt)|*.txt";
+            saveFileDialog.DefaultExt = "txt";
+            saveFileDialog.AddExtension = true;
+
+            bool? dialogResult = saveFileDialog.ShowDialog();
+
+            if (dialogResult == true)
+            {
+                
+                if (System.IO.Path.GetExtension(saveFileDialog.FileName).ToLower() == ".txt")
+                {
+                    
+                    File.WriteAllText(saveFileDialog.FileName, textBox1.Text);
+                }
+                else
+                {
+                    MessageBox.Show("Wybrany plik nie jest plikiem tekstowym (.txt). Wybierz poprawny plik.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
     }
 }
