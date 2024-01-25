@@ -20,6 +20,7 @@ using tik4net;
 using Renci.SshNet;
 
 
+
 namespace WpfApp1IP
 {
     /// <summary>
@@ -27,6 +28,7 @@ namespace WpfApp1IP
     /// </summary>
     public partial class MainWindow : Window
     {
+        private SshClient client;
         public MainWindow()
         {
             InitializeComponent();
@@ -157,23 +159,53 @@ namespace WpfApp1IP
 
         }
 
-        private void Button_Click_4(object sender, RoutedEventArgs e)
+        private async void Button_Click_4(object sender, RoutedEventArgs e)
         {
 
-            textBox1.Text = string.Empty;
-            ProcessStartInfo psi = new ProcessStartInfo("cmd", "/c netsh wlan show networks mode=bssid")
+            string host = "192.168.12.1";
+            string username = "admin";
+            string password = "admin";
+
+            string? result = await Task.Run(() =>
             {
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
+                using (var client = new SshClient(host, username, password))
+                {
+                    try
+                    {
+                        client.Connect();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Nie udało się połączyć: " + ex.Message);
+                        return null;
+                    }
 
-            Process p = Process.Start(psi);
-            string output = p.StandardOutput.ReadToEnd();
-            p.WaitForExit();
+                    if (client.IsConnected)
+                    {
+                        var cmd = client.RunCommand("/interface print");
+                        Debug.WriteLine(cmd.Result);
 
-            textBox1.Text = output;
+                        client.Disconnect();
+
+                        return cmd.Result;
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Nie udało się połączyć.");
+                        return null;
+                    }
+                }
+            });
+
+            if (result != null)
+            {
+                textBox1.Text = result;
+            }
         }
+    
+            
+
+        
 
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
@@ -387,7 +419,7 @@ namespace WpfApp1IP
                 // Sprawdź, czy plik ma rozszerzenie .txt
                 if (System.IO.Path.GetExtension(openFileDialog.FileName).ToLower() == ".txt")
                 {
-                    
+
                     string fileContent = File.ReadAllText(openFileDialog.FileName);
                     textBox1.Text = fileContent;
                 }
@@ -400,7 +432,7 @@ namespace WpfApp1IP
 
         private void Button_Click_10(object sender, RoutedEventArgs e)
         {
-            
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Text Files (*.txt)|*.txt";
             saveFileDialog.DefaultExt = "txt";
@@ -410,10 +442,10 @@ namespace WpfApp1IP
 
             if (dialogResult == true)
             {
-                
+
                 if (System.IO.Path.GetExtension(saveFileDialog.FileName).ToLower() == ".txt")
                 {
-                    
+
                     File.WriteAllText(saveFileDialog.FileName, textBox1.Text);
                 }
                 else
@@ -422,8 +454,144 @@ namespace WpfApp1IP
                 }
             }
         }
+
+        private async void Button_Click_11(object sender, RoutedEventArgs e)
+        {
+            string host = "100.20.20.0";
+            string username = "admin";
+            string password = "admin";
+
+            string result = await Task.Run(() =>
+            {
+                using (var client = new SshClient(host, username, password))
+                {
+                    try
+                    {
+                        client.Connect();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Nie udało się połączyć: " + ex.Message);
+                        return null;
+                    }
+
+                    if (client.IsConnected)
+                    {
+                        var cmd = client.RunCommand("show mac address-table");
+                        Debug.WriteLine(cmd.Result);
+
+                        client.Disconnect();
+
+                        return cmd.Result;
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Nie udało się połączyć.");
+                        return null;
+                    }
+                }
+            });
+        }
+
+
+            private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
+            {
+
+            }
+
+        private async void Button_Click_12(object sender, RoutedEventArgs e)
+        {
+            string host = "192.168.12.1";
+            string username = "admin";
+            string password = "admin";
+            string command = textBox1.Text;
+
+            string? result = await Task.Run(() =>
+            {
+                using (var client = new SshClient(host, username, password))
+                {
+                    try
+                    {
+                        client.Connect();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Nie udało się połączyć: " + ex.Message);
+                        return null;
+                    }
+
+                    if (client.IsConnected)
+                    {
+                        var cmd = client.RunCommand(command);
+                        Debug.WriteLine(cmd.Result);
+
+                        client.Disconnect();
+
+                        return cmd.Result;
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Nie udało się połączyć.");
+                        return null;
+                    }
+                }
+            });
+
+            if (result != null)
+            {
+                textBox1.Text = result;
+            }
+        }
+
+        private async void Button_Click_13(object sender, RoutedEventArgs e)
+        {
+            
+                
+            
+
+        }
+
+        
+
+        private void textBox2_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private async void Button_Click_14(object sender, RoutedEventArgs e)
+        {
+            string command = textbox2.Text;
+
+            if (client != null && client.IsConnected)
+            {
+                string? result = await Task.Run(() =>
+                {
+                    var cmd = client.RunCommand(command);
+                    Debug.WriteLine(cmd.Result);
+                    return cmd.Result;
+                });
+
+                if (result != null)
+                {
+                    textbox2.Text = result;
+                }
+            }
+            else
+            {
+                Debug.WriteLine("Nie udało się połączyć.");
+            }
+        }
     }
+    
 }
+       
+
+
+        
+    
+
+
+
     
 
 
