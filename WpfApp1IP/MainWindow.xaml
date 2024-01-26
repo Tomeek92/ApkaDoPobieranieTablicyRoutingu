@@ -5,65 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1IP"
         mc:Ignorable="d"
+        
         Title="MainWindow" Height="750" Width="1200"
         Background="LightGray">
+    <Canvas>
+        <Grid Margin="0,0,0,-6">
 
-    <Grid Margin="0,0,0,-6">
-        <Button Content=" Dostępne Interface lokalnie" HorizontalAlignment="Left" Margin="34,106,0,0" VerticalAlignment="Top" Height="51" Width="404" Click="Button_Click_2" FontSize="15" Background="LightBlue" BorderBrush="Black" BorderThickness="3" FontFamily="Roboto"/>
-        <Button Content="Tabela Routingu lokalna" HorizontalAlignment="Left" Margin="34,30,0,0" VerticalAlignment="Top" Height="52" Width="404" Click="Button_Click_3" FontSize="15" Background="LightBlue" BorderBrush="Black" BorderThickness="3" FontFamily="Roboto"/>
-        <TextBox x:Name="textBox1" FontFamily="Courier New" IsReadOnly="True" HorizontalAlignment="Left" Height="318" Margin="500,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="667" ScrollViewer.VerticalScrollBarVisibility="Auto" TextChanged="textBox1_TextChanged">
-            <TextBox.Template>
-                <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border Background="White" BorderBrush="Black" BorderThickness="1" CornerRadius="5">
-                        <Grid>
-                            <Rectangle StrokeThickness="0">
-                                <Rectangle.Fill>
-                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                        <GradientStop Color="White" Offset="0.0"/>
-                                        <GradientStop Color="White" Offset="0.4"/>
-                                        <GradientStop Color="White" Offset="0.45"/>
-                                        <GradientStop Color="White" Offset="0.55"/>
-                                        <GradientStop Color="White" Offset="0.6"/>
-                                        <GradientStop Color="White" Offset="1.0"/>
-                                    </LinearGradientBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                            <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,5,0"/>
-                        </Grid>
-                    </Border>
-                </ControlTemplate>
-            </TextBox.Template>
-        </TextBox>
-        <Button Content="Skanuj sieć Mikrotik" HorizontalAlignment="Left" Height="58" Margin="34,174,0,0" VerticalAlignment="Top" Width="404" Click="Button_Click_4" FontSize="15" Background="LightBlue" BorderBrush="Black" BorderThickness="3" />
-        <Button HorizontalAlignment="Left" Margin="268,351,0,0" VerticalAlignment="Top" Height="58" Width="170" Click="Button_Click_5" Content="Wyswietl tablice Site 1" Background="LightBlue" BorderBrush="Black" BorderThickness="3"/>
-        <Button Content="Wyświetl tablice Site 2" HorizontalAlignment="Left" Margin="34,351,0,0" VerticalAlignment="Top" Width="170" Height="58" Click="Button_Click_6" Background="LightBlue" BorderBrush="Black" BorderThickness="3"/>
-        <Button Content="Import" HorizontalAlignment="Left" Margin="500,38,0,0" VerticalAlignment="Top" Width="270" Height="36" Click="Button_Click_9" Background="LightBlue" BorderBrush="Black" BorderThickness="3"/>
-        <Button Content="Export" HorizontalAlignment="Left" Margin="897,37,0,0" VerticalAlignment="Top" Width="270" Height="37" Click="Button_Click_10" Background="LightBlue" BorderBrush="Black" BorderThickness="3"/>
-        <Button Content="Skanuj sieć Cisco" HorizontalAlignment="Left" Margin="34,257,0,0" VerticalAlignment="Top" Height="60" Width="404" Click="Button_Click_11"/>
-        <TextBox x:Name="textbox2" Height="173" Margin="500,434,16,0" TextWrapping="Wrap" Text="Cmd podaj komendę" VerticalAlignment="Top" TextChanged="textBox2_TextChanged"/>
-        <Button Content="Połącz się z Mikrotik" HorizontalAlignment="Left" Margin="62,448,0,0" VerticalAlignment="Top" Height="73" Width="114" Click="Button_Click_12"/>
-        <Button Content="Połącz się z Cisco" HorizontalAlignment="Left" Margin="62,556,0,0" VerticalAlignment="Top" Height="68" Width="114" Click="Button_Click_13"/>
-        <Button Content="Enter" HorizontalAlignment="Left" Margin="1001,612,0,0" VerticalAlignment="Top" Width="152" Height="63" Click="Button_Click_14"/>
-    </Grid>
-    <Window.Resources>
-        <Style TargetType="Button">
-            <Style.Triggers>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property= "RenderTransform">
-                        <Setter.Value>
-                            <TransformGroup>
-                                <ScaleTransform ScaleX="0.99" ScaleY="0.99"/>
-                                <TranslateTransform X="2" Y="2"/>
-                            </TransformGroup>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="BorderThickness">
-                        <Setter.Value>
-                            <Thickness Left="2" Right="2" Top="2" Bottom="2"/>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
+            <Button Content=" Dostępne Interface lokalnie" HorizontalAlignment="Left" Margin="34,220,0,0" VerticalAlignment="Top" Height="60" Width="404" Click="Button_Click_2" FontSize="15" Background="LightBlue" BorderBrush="Black" BorderThickness="3" FontFamily="Roboto"/>
+            <Button Content="Tabela Routingu lokalna" HorizontalAlignment="Left" Margin="34,120,0,0" VerticalAlignment="Top" Height="60" Width="404" Click="Button_Click_3" FontSize="15" Background="LightBlue" BorderBrush="Black" BorderThickness="3" FontFamily="Roboto"/>
+            <TextBox x:Name="textBox1" FontFamily="Courier New" IsReadOnly="True" HorizontalAlignment="Left" Height="318" Margin="500,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="667" ScrollViewer.VerticalScrollBarVisibility="Auto" TextChanged="textBox1_TextChanged"/>
+            <Button Content="Lista interface Mikrotik" HorizontalAlignment="Left" Height="60" Margin="34,0,0,0" VerticalAlignment="Center" Width="404" Click="Button_Click_4" FontSize="15" Background="LightBlue" BorderBrush="Black" BorderThickness="3" />
+            <Button HorizontalAlignment="Left" Margin="34,520,0,0" VerticalAlignment="Top" Height="60" Width="404" Click="Button_Click_5" Content="Wyswietl tablice Site 1 Mikrotik" Background="LightBlue" BorderBrush="Black" BorderThickness="3" FontFamily="Roboto" FontSize="14"/>
+            <Button Content="Wyświetl tablice Site 2 Cisco" HorizontalAlignment="Left" Margin="34,622,0,0" VerticalAlignment="Top" Width="404" Height="60" Click="Button_Click_6" Background="LightBlue" BorderBrush="Black" BorderThickness="3" FontFamily="Roboto" FontSize="14"/>
+            <Button Content="Import" HorizontalAlignment="Left" Margin="500,38,0,0" VerticalAlignment="Top" Width="270" Height="36" Click="Button_Click_9" Background="LightBlue" BorderBrush="Black" BorderThickness="3"/>
+            <Button Content="Export" HorizontalAlignment="Left" Margin="897,38,0,0" VerticalAlignment="Top" Width="270" Height="36" Click="Button_Click_10" Background="LightBlue" BorderBrush="Black" BorderThickness="3"/>
+            <Button Content="Lista interface Cisco" HorizontalAlignment="Left" Margin="34,419,0,0" VerticalAlignment="Top" Height="60" Width="404" Click="Button_Click_11" Background="LightBlue" BorderBrush="Black" BorderThickness="3" FontFamily="Roboto" FontSize="14"/>
+            <TextBox x:Name="textbox2" Height="173" Margin="500,434,16,0" TextWrapping="Wrap" Text="Cmd podaj komendę" VerticalAlignment="Top" TextChanged="textBox2_TextChanged" ScrollViewer.VerticalScrollBarVisibility="Auto" Width="667" />
+            <Button Content="Cmd dla Mikrotik" HorizontalAlignment="Left" Margin="656,622,0,0" VerticalAlignment="Top" Height="72" Width="114" Click="Button_Click_12" Background="LightBlue" BorderBrush="Black" BorderThickness="3" RenderTransformOrigin="0.698,0.539"/>
+            <Button Content="Cmd dla Cisco" HorizontalAlignment="Left" Margin="500,622,0,0" VerticalAlignment="Top" Height="72" Width="114" Click="Button_Click_13" Background="LightBlue" BorderBrush="Black" BorderThickness="3"/>
+            <Button x:Name="button14"  Content="Cmd dla lokalnego" HorizontalAlignment="Left" Margin="897,622,0,0" VerticalAlignment="Top" Width="114" Height="72" Click="button14_Click" Background="LightBlue" BorderBrush="Black" BorderThickness="3"/>
+            <Button Content="Export" HorizontalAlignment="Left" Margin="1053,622,0,0" Width="114" Background="LightBlue" BorderBrush="Black" BorderThickness="3" Click="Button_Click_14" RenderTransformOrigin="0.584,0.539"/>
+
+        </Grid>
+    </Canvas>
+
+
 </Window>
