@@ -17,5 +17,19 @@ To get started with this project, clone the repository and open the project in y
 ## Contributions
 As this is an academic project, contributions are not currently being accepted. However, feel free to fork the project and make your own adjustments.
 
-## License
-This project is licensed under the MIT License.
+## How to use
+1. Po kliknieciu Tabela routingu wyświetlą nam się informacje na temat tabeli routingu które możemy exportować jako plik txt files.
+ 
+   [!Tabela Routingu](https://i.ibb.co/28TBLDG/Zrzut-ekranu-2024-03-27-155745.png)
+
+2. Po kliknieciu Tabela interface wyświetlą nam się informacje na dostępnych inteface które możemy exportować jako plik txt files.
+   
+   [!Tabela Interface](https://i.ibb.co/s3hWBVb/Zrzut-ekranu-2024-03-27-155805.png)
+   
+3. Korzystanie z CMD wpisujemy odpowiednią komendę w cmd następnie w polu pokazują się informację które można exportować jako plik txt files.
+
+   [!Cmd](https://i.ibb.co/LZCLgXD/Zrzut-ekranu-2024-03-27-155829.png)
+
+4. Dodatkowo jest opcja importu pliku txt files która wyświetli nam informacje w aplikacji.
+   
+   [!import](https://i.ibb.co/NWfT6YR/Zrzut-ekranu-2024-03-27-165532.png)
